@@ -12,7 +12,12 @@ namespace ConsoleUI
         {
             //InMemoryTest();
             //EfCarDalTest();
-            EfCarDalTest2();
+            //EfCarDalTest2();
+            CarManager productManager = new CarManager(new EfCarDal());
+            foreach (var car in productManager.GetCarDetails())
+            {
+                Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
+            }
 
         }
 
@@ -20,7 +25,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Car car = new Car();
-            car.Name = "Yeşil Araba";
+            car.CarName = "Yeşil Araba";
             car.BrandId = 5;
             car.ColorId = 2;
             car.DailyPrice = 0;
@@ -35,7 +40,7 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new EfCarDal());
             foreach (var car in carManager.GetCarsByBrandId(1))
             {
-                Console.WriteLine(car.Name);
+                Console.WriteLine(car.CarName);
             }
         }
 
@@ -44,7 +49,7 @@ namespace ConsoleUI
             CarManager carManager = new CarManager(new InMemoryCarDal());
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine(car.Name);
+                Console.WriteLine(car.CarName);
             }
         }
     }
