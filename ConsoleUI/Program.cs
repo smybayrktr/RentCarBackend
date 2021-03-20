@@ -12,33 +12,20 @@ namespace ConsoleUI
         {
             //InMemoryTest();
             //EfCarDalTest();
-            //EfCarDalTest2();
             CarManager productManager = new CarManager(new EfCarDal());
-            foreach (var car in productManager.GetCarDetails())
+            foreach (var car in productManager.GetCarDetails().Data)
             {
                 Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
             }
 
         }
 
-        private static void EfCarDalTest2()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
-            Car car = new Car();
-            car.CarName = "Yeşil Araba";
-            car.BrandId = 5;
-            car.ColorId = 2;
-            car.DailyPrice = 0;
-            car.Description = "2010 model yeni bakımdan çıkmış araba";
-            car.Id = 6;
-            car.ModelYear = 2010;
-            carManager.Verification(car);
-        }
+
 
         private static void EfCarDalTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarsByBrandId(1))
+            foreach (var car in carManager.GetCarsByBrandId(1).Data)
             {
                 Console.WriteLine(car.CarName);
             }
@@ -47,7 +34,7 @@ namespace ConsoleUI
         private static void InMemoryTest()
         {
             CarManager carManager = new CarManager(new InMemoryCarDal());
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine(car.CarName);
             }
