@@ -17,6 +17,23 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        public void Add(Car car)
+        {
+            if (car.CarName.Length >= 2 && car.DailyPrice >= 0)
+            {
+                _carDal.Add(car);
+            }
+            else
+            {
+                Console.WriteLine("Araba adı 2 harften uzun veya günlük fiyatı 0 dan büyük olmalıdır.");
+            }
+        }
+
+        public void Delete(Car car)
+        {
+            _carDal.Delete(car);
+        }
+
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
@@ -37,16 +54,9 @@ namespace Business.Concrete
             return _carDal.GetAll(p => p.ColorId == colorId);
         }
 
-        public void Verification(Car car)
+        public void Update(Car car)
         {
-            if (car.CarName.Length>=2 && car.DailyPrice>=0)
-            {
-                _carDal.Add(car);
-            }
-            else
-            {
-                Console.WriteLine("Araba adı 2 harften uzun veya günlük fiyatı 0 dan büyük olmalıdır.");
-            }
+            _carDal.Update(car);
         }
     }
 }
