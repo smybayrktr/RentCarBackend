@@ -11,16 +11,30 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             //InMemoryTest();
-            //EfCarDalTest();
+            // EfCarDalTest();
+            //CarDetailsTest();
+            //GetAllTest();
+            
+           
+        }
+
+        private static void GetAllTest()
+        {
+            CarManager productManager = new CarManager(new EfCarDal());
+            foreach (var car in productManager.GetAll().Data)
+            {
+                Console.WriteLine(car.CarName);
+            }
+        }
+
+        private static void CarDetailsTest()
+        {
             CarManager productManager = new CarManager(new EfCarDal());
             foreach (var car in productManager.GetCarDetails().Data)
             {
                 Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
             }
-
         }
-
-
 
         private static void EfCarDalTest()
         {

@@ -13,5 +13,10 @@ namespace Business.Constants
         public static string Information = "Sistem Pazar Günleri Kapalı";
         public static string Listed = "Listelendi";
         public static string Updated = "Güncellendi";
+        public static string NameError = "İsim alanları boş geçilemez";
+        public static string MailError = "Geçersiz E-Mail";
+        public static string Car = "Teslim edilmemiş araba";
+        public static string Deliver = "Araba Teslim edildi";
+        public static string TakeDelivery = "Araba Teslim alındı";
     }
 }
