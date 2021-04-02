@@ -39,7 +39,7 @@ namespace Business.Concrete
         {
             if (DateTime.Today.Equals("pazar"))
             {
-                return new ErrorDataResult<List<Car>>(Messages.Information);
+                return new ErrorDataResult<List<Car>>(Messages.ClockInformation);
             }
             return new SuccessDataResult < List < Car >>(_carDal.GetAll(), Messages.Listed);
         }

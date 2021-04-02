@@ -22,7 +22,7 @@ namespace Business.Concrete
         {
             if (rental.ReturnDate==null)
             {
-                return new ErrorResult(Messages.Car);
+                return new ErrorResult(Messages.CarInformation);
             }
             _rentalDal.Delete(rental);
             return new SuccessResult(Messages.Deliver);
