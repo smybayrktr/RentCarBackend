@@ -1,6 +1,7 @@
 ﻿using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -22,5 +23,11 @@ namespace Business.Constants
 
         public static string CarImageAddedMessage = "Araba Resmi Eklendi";
         public static string MoreThanFiveImage = "Bir arabanın 5 ten fazla resmi olamaz.";
+        public static string AuthorizationDenied = "Yetkilendirme Reddedildi";
+
+        public static string AddedCarImage = "Araba için yüklenilen resim başarıyla eklendi.";
+        public static string DeletedCarImage = "Arabanın resmi başarıyla silindi.";
+        public static string UpdatedCarImage = "Araba için yüklenilen resim başarıyla güncellendi.";
+        public static string FailedCarImageAdd = "Bir araba 5'ten fazla resme sahip olamaz.";
     }
 }

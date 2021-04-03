@@ -9,46 +9,77 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string Add(IFormFile file)
+        public static string AddAsync(IFormFile file)
         {
             var result = newPath(file);
-            var sourcepath = Path.GetTempFileName();
-
-            using (var stream = new FileStream(sourcepath, FileMode.Create))
+            try
             {
-                file.CopyTo(stream);
-            }
-            File.Move(sourcepath, result.newPath);
-            return result.Path2;
-        }
+                var sourcepath = Path.GetTempFileName();
+                if (file.Length > 0)
+                    using (var stream = new FileStream(sourcepath, FileMode.Create))
+                        file.CopyTo(stream);
 
-        public static string Update(string sourcePath, IFormFile file)
-        {
-            var result = newPath(file);
-            using (var stream = new FileStream(result.newPath, FileMode.Create))
+                File.Move(sourcepath, result.newPath);
+            }
+            catch (Exception exception)
             {
-                file.CopyTo(stream);
-            }
 
-            File.Delete(sourcePath);
+                return exception.Message;
+            }
 
             return result.Path2;
         }
 
-        public static IResult Delete(string path)
+        public static string UpdateAsync(string sourcePath, IFormFile file)
+        {
+            var result = newPath(file);
+
+            try
+            {
+                //File.Copy(sourcePath,result);
+
+                if (sourcePath.Length > 0)
+                {
+                    using (var stream = new FileStream(result.newPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+
+                File.Delete(sourcePath);
+            }
+            catch (Exception excepiton)
+            {
+                return excepiton.Message;
+            }
+
+            return result.Path2;
+        }
+
+        public static IResult DeleteAsync(string path)
         {
             File.Delete(path);
             return new SuccessResult();
         }
 
-        private static (string newPath, string Path2) newPath(IFormFile file)
+        public static (string newPath, string Path2) newPath(IFormFile file)
         {
             FileInfo ff = new FileInfo(file.FileName);
             string fileExtension = ff.Extension;
-            var newFileName = Guid.NewGuid().ToString("N") + fileExtension;
-            string path12 = @"\wwroot\Images\";
-            string result = Environment.CurrentDirectory + path12 + newFileName;
-            return (result, $"\\Images\\{newFileName}");
+
+            var creatingUniqueFilename = Guid.NewGuid().ToString("N")
+               + "_" + DateTime.Now.Month + "_"
+               + DateTime.Now.Day + "_"
+               + DateTime.Now.Year + fileExtension;
+
+
+            string path = Environment.CurrentDirectory + @"\wwwroot\Images";
+
+            string result = $@"{path}\{creatingUniqueFilename}";
+
+            return (result, $"\\Images\\{creatingUniqueFilename}");
+
+
         }
     }
 }
