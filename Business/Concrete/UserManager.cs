@@ -2,6 +2,7 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
@@ -23,6 +24,8 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(UserValidator))]
+        [CacheRemoveAspect("IBrandService.Get")]
+        [TransactionScopeAspect]
         public IResult Add(User user)
         {
             _userDal.Add(user);
@@ -35,12 +38,12 @@ namespace Business.Concrete
             _userDal.Delete(user);
             return new SuccessResult(Messages.Deleted);
         }
-
+        [CacheAspect]
         public IDataResult<List<User>> GetAll()
         {
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.Listed);
         }
-
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult Update(User user)
         {
             _userDal.Update(user);

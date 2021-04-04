@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,6 +22,7 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
         [ValidationAspect(typeof(BrandValidator))]
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult Add(Brand brand)
         {
             _brandDal.Add(brand);
@@ -31,12 +34,13 @@ namespace Business.Concrete
             _brandDal.Delete(brand);
             return new SuccessResult(Messages.Deleted);
         }
-
+        [CacheAspect]
+        [PerformanceAspect(15)]
         public IDataResult<List<Brand>> GetAll()
         {
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.Listed);
         }
-
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult Update(Brand brand)
         {
             return new SuccessResult(Messages.Updated);

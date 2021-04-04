@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,7 +19,7 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
-
+        [PerformanceAspect(15)]
         public IResult Deliver(Rental rental)
         {
             if (rental.ReturnDate==null)
@@ -27,7 +29,7 @@ namespace Business.Concrete
             _rentalDal.Delete(rental);
             return new SuccessResult(Messages.Deliver);
         }
-
+        [CacheAspect]
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.Listed);
@@ -38,7 +40,7 @@ namespace Business.Concrete
             rental.RentDate = DateTime.Now;
             return new SuccessResult(Messages.TakeDelivery);
         }
-
+        [CacheRemoveAspect("IBrandService.Get")]
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
